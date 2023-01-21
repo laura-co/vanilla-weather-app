@@ -44,6 +44,3 @@ function displayTemperature(response) {
     let apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=Belfast&appid=${apiKey}&units=metric`;
 
     axios.get(apiUrl).then(displayTemperature);
-
-
-    /// timestamp 
