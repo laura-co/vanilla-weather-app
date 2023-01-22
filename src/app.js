@@ -22,7 +22,8 @@ function formatDate(timestamp) {
     return `${day} ${hours}:${minutes}`;
 }
 
-function displayForecast() {
+function displayForecast(response) {
+    console.log(response.data.daily);
     let forecastElement = document.querySelector("#forecast");
 
     let days = ["Sat", "Sun", "Mon", "Tue", "Wed"];
@@ -51,6 +52,12 @@ function displayForecast() {
     forecastElement.innerHTML = forecastHTML;
 }
 
+function getForecast(coordinates) {
+    console.log(coordinates);
+    let apiKey = "9cb72bec958f8fb02391985ed7b219d2";
+    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+    axios.get(apiUrl).then(displayForecast);
+}
 
 function displayTemperature(response) {
     let temperatureElement = document.querySelector("#temperature");
@@ -74,10 +81,12 @@ function displayTemperature(response) {
         `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
     );
     iconElement.setAttribute("alt", response.data.weather[0].description);
+
+getForecast(response.data.coord);
 }
 
 function search(city) {
-    let apiKey = "0581d02730e98a58a80fa1d4c2e31dcc";
+    let apiKey = "9cb72bec958f8fb02391985ed7b219d2";
     let apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
     axios.get(apiUrl).then(displayTemperature);
 }
@@ -86,12 +95,12 @@ function handleSubmit(event) {
     event.preventDefault();
     let cityInputElement = document.querySelector("#city-input");
     search(cityInputElement.value);
-
 }
 
 function displayFahrenheitTemperature(event) {
     event.preventDefault();
     let temperatureElement = document.querySelector("#temperature");
+    
     celsiusLink.classList.remove("active");
     fahrenheitLink.classList.add("active");
     let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
@@ -100,9 +109,9 @@ function displayFahrenheitTemperature(event) {
 
 function displayCelsiusTemperature(event) {
     event.preventDefault();
-    let temperatureElement = document.querySelector("#temperature");
     celsiusLink.classList.add("active");
     fahrenheitLink.classList.remove("active");
+    let temperatureElement = document.querySelector("#temperature");
     temperatureElement.innerHTML = Math.round(celsiusTemperature);
 }
 
@@ -118,5 +127,3 @@ let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
 search("Belfast");
-displayForecast();
-
