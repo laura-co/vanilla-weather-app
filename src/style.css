@@ -29,11 +29,6 @@ li:first-letter {
     text-transform: capitalize;
 }
 
-span {
-        cursor: default;
-        text-decoration: none;
-    }
-
 .weather-app-wrapper {
     max-width: 600px;
     margin: 30px auto;
@@ -68,16 +63,6 @@ span {
     position: relative;
     font-size: 16px;
     top: -34px;
-}
-
-.weather-temperature .active {
-    color: rgb(33, 33, 33);
-    cursor: default;
-    text-decoration: none;
-}
-
-.weather-temperature .active:hover {
-    text-decoration: none;
 }
 
 .weather-forecast {
